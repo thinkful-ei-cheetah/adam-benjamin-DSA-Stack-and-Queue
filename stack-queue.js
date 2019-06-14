@@ -68,7 +68,7 @@ function matchingParens(str) {
     let count = 0;
     for (let i = 0; i < str.length; i++) { //ignore 3 '('
       if (tempStack.pop() === '(') {
-        count++
+        count++;
         if (count > ignore) {
           console.log('You have an extra opening parenthesis at position', str.length - i);
         }
@@ -79,14 +79,14 @@ function matchingParens(str) {
     let count = 0;
     for (let i = 0; i < str.length; i++) { //ignore 3 '('
       if (tempStack.pop() === ')') {
-        count++
+        count++;
         if (count <= mistakes) {
           console.log('You have an extra closing parenthesis at position', str.length - i);
         }
       }
-    };
+    }
   } else {
-    console.log('You have not made a mistake.')
+    console.log('You have not made a mistake.');
   }
 
   return;
@@ -174,3 +174,23 @@ function is_palindrome(s){
 // console.log(is_palindrome("1001"));
 // console.log(is_palindrome("Tauhida"));
 
+
+
+// 8. Queue the stacks
+
+function queFromStacks(que){
+  let initStack = new Stack();
+  let finStack = new Stack();
+
+  for(let i = 0; i < que.length; i++){
+    initStack.push(que[i]);
+  }
+
+  for(let j = 0; j < que.length; j++){
+    finStack.push(initStack.pop());
+  }
+
+  display(finStack);
+}
+
+queFromStacks('hello');

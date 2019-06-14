@@ -2,7 +2,8 @@
 class _Node {
   constructor(value) {
     this.value = value;
-    this.next = next;
+    this.next = null;
+    this.prev = null;
   }
 }
 
@@ -15,10 +16,11 @@ class Queue {
   enqueue(data) {
     const node = new _Node(data);
     if (this.first === null) {
-      this.fist = node;
+      this.first = node;
     }
     if (this.last) {
       this.last.next = node;
+      node.prev = this.last;
     }
     this.last = node;
   }
@@ -29,6 +31,7 @@ class Queue {
     }
     const node = this.first;
     this.first = this.first.next;
+    this.first.prev = null;
 
     if (node === this.last) {
       this.last = null;
@@ -52,7 +55,7 @@ function isEmpty(q) {
 function display(q) {
   let currentChar = q.first;
 
-  while(currentChar.next !== null){
+  while(currentChar !== null){
     console.log(currentChar.value);
     currentChar = currentChar.next;
   }
@@ -66,6 +69,42 @@ function main() {
   starTreqQ.enqueue('Uhura');
   starTreqQ.enqueue('Sulu');
   starTreqQ.enqueue('Checkov');
+
+  // starTreqQ.dequeue();
+  // starTreqQ.dequeue();
+
   display(starTreqQ);
 
 }
+
+main();
+
+
+function dancingPartners(que){
+  let spares = new Queue();
+
+  for(let i = 0; i < que.length; i++){
+    if(spares.first !== null && spares.first.value !== que[i][0]){
+      spares.dequeue();
+    } else if(i === que.length -1){
+      spares.enqueue(que[i][0]);
+      i++;
+    } else if(que[i][0] !== que[i + 1][0]){
+      i++;
+    }else{
+      spares.enqueue(que[i][0]);
+    }
+  }
+  display(spares);
+}
+
+dancingPartners([
+  ['F', 'Jane'],
+  ['M', 'John'], 
+  ['M', 'Frank'], 
+  ['M', 'Sherlock'], 
+  ['F', 'Madonna'],
+  ['M', 'David'],
+  ['M', 'Christopher'],
+  ['F','Beyonce'],
+]);
