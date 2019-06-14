@@ -107,50 +107,45 @@ function main(){
   // matchingParens('afef(a((())))))');
 
 
-  display((sort([8, 1, 2, 3, 5, 4, 10])));
+  display((sort([8, 1, 190, 15, 2, 29, 3, 5, 4, 10, 5000])));
 }
 
-// function sort(stack) {
-//   let tempStack = new Stack();
-//   let initialStack = new Stack();
-//   let temp = 0;
+function sort(stack) {
+  let tempStack = new Stack();
+  let initialStack = new Stack();
+  let temp = 0;
 
-//   for (let i = 0; i < stack.length; i++) {
-//     initialStack.push(stack[i]);
-//   }
+  for (let i = 0; i < stack.length; i++) {
+    initialStack.push(stack[i]);
+  }
 
-//   while (initialStack.top !== null) { // [10, 4, 5, 3, 2, 1, 8]
+  while (initialStack.top !== null) { 
 
-//     temp = initialStack.pop(); //10   [10] 3 [5, 4]
+    temp = initialStack.pop();
+    
+    if (tempStack.top === null) {
+      if (peek(initialStack) < temp) {
+        tempStack.push(initialStack.pop());
+        tempStack.push(temp);
+      } else {
+        tempStack.push(temp);
+      }
+    } else {
+      while ( temp < peek(tempStack)) {
+        initialStack.push(tempStack.pop());
+        if (tempStack.top === null) break;
+      }
+      tempStack.push(temp);
+    }
+  }
 
-//     if (tempStack.top !== null && temp < peek(tempStack)) {  
-//         initialStack.push(tempStack.pop());
-//         tempStack.push(temp);
-//     } else if (initialStack.top !== null && peek(initialStack) < temp) {//[3] 10  [5]   true && 4 < 10
-//       tempStack.push(temp); //[3] 10 [10, 5]
-//       temp = initialStack.pop(); //[null] 3 [10, 5]
-//       initialStack.push(temp); //[10] 3 [5]
-      
-      
-//       tempStack.push(initialStack.pop());                               //        [4]
-//       initialStack.push(temp);                                          //         
-//       display(initialStack);
-//       display(tempStack);
-//     } else {
-//       tempStack.push(temp);
-//     }
+  while (tempStack.top !== null) {
+    initialStack.push(tempStack.pop());
+  }
 
-//   }
-  
-//   while (tempStack.top !== null) {
-//     initialStack.push(tempStack.pop());
-//   }
+  return initialStack;
+}
 
-//   return initialStack;
-// }
-
-// [1, 20, 2, 39, 5, 40, 15] = stack
-// ansStack
 
 main();
 
