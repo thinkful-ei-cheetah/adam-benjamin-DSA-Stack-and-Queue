@@ -47,7 +47,50 @@ function display(stack){
   }
 }
 
+function matchingParens(str) {
+  let tempStack = new Stack();
+  let openCounter = 0;
+  let closeCounter = 0;
 
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === '(') {
+      openCounter++;
+    } else if (str[i] === ')') {
+      closeCounter++;
+    } 
+    
+    tempStack.push(str[i]);
+  }
+ 
+  if(openCounter > closeCounter) {  //4 3
+    let mistakes = openCounter - closeCounter; //1
+    let ignore = openCounter - mistakes; //3
+    let count = 0;
+    for (let i = 0; i < str.length; i++) { //ignore 3 '('
+      if (tempStack.pop() === '(') {
+        count++
+        if (count > ignore) {
+          console.log('You have an extra opening parenthesis at position', str.length - i);
+        }
+      }
+    }
+  } else if (closeCounter > openCounter) {
+    let mistakes = closeCounter - openCounter; //1
+    let count = 0;
+    for (let i = 0; i < str.length; i++) { //ignore 3 '('
+      if (tempStack.pop() === ')') {
+        count++
+        if (count <= mistakes) {
+          console.log('You have an extra closing parenthesis at position', str.length - i);
+        }
+      }
+    };
+  } else {
+    console.log('You have not made a mistake.')
+  }
+
+  return;
+}
 
 function main(){
   let starTrek = new Stack();
@@ -61,7 +104,53 @@ function main(){
   // console.log(isEmpty(starTrek));
   // console.log(display(starTrek));
 
+  // matchingParens('afef(a((())))))');
+
+
+  display((sort([8, 1, 2, 3, 5, 4, 10])));
 }
+
+// function sort(stack) {
+//   let tempStack = new Stack();
+//   let initialStack = new Stack();
+//   let temp = 0;
+
+//   for (let i = 0; i < stack.length; i++) {
+//     initialStack.push(stack[i]);
+//   }
+
+//   while (initialStack.top !== null) { // [10, 4, 5, 3, 2, 1, 8]
+
+//     temp = initialStack.pop(); //10   [10] 3 [5, 4]
+
+//     if (tempStack.top !== null && temp < peek(tempStack)) {  
+//         initialStack.push(tempStack.pop());
+//         tempStack.push(temp);
+//     } else if (initialStack.top !== null && peek(initialStack) < temp) {//[3] 10  [5]   true && 4 < 10
+//       tempStack.push(temp); //[3] 10 [10, 5]
+//       temp = initialStack.pop(); //[null] 3 [10, 5]
+//       initialStack.push(temp); //[10] 3 [5]
+      
+      
+//       tempStack.push(initialStack.pop());                               //        [4]
+//       initialStack.push(temp);                                          //         
+//       display(initialStack);
+//       display(tempStack);
+//     } else {
+//       tempStack.push(temp);
+//     }
+
+//   }
+  
+//   while (tempStack.top !== null) {
+//     initialStack.push(tempStack.pop());
+//   }
+
+//   return initialStack;
+// }
+
+// [1, 20, 2, 39, 5, 40, 15] = stack
+// ansStack
 
 main();
 
