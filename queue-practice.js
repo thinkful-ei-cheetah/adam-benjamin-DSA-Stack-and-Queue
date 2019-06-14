@@ -30,12 +30,15 @@ class Queue {
       return;
     }
     const node = this.first;
-    this.first = this.first.next;
-    this.first.prev = null;
-
+    
     if (node === this.last) {
       this.last = null;
+      this.first = null;
+    } else {
+      this.first = this.first.next;
+      this.first.prev = null;
     }
+    
     return node.value;
   }
 
@@ -73,11 +76,37 @@ function main() {
   // starTreqQ.dequeue();
   // starTreqQ.dequeue();
 
-  display(starTreqQ);
+  // display(starTreqQ);
+
+  bank(15);
 
 }
 
 main();
+
+function bank(num) {
+  let line = new Queue();
+
+  for (let i = 0; i < num; i++) {
+    line.enqueue(i);
+  }
+
+  while (line.first !== null) {
+    let success = Math.floor(Math.random() * 4);
+
+    if (success === 0) {
+      console.log(peek(line),' did not have the correct paperwork.');
+
+      line.enqueue(line.dequeue())
+    } else {
+      console.log(peek(line),' was served.')
+      line.dequeue();
+    }
+  }
+  
+  return;
+
+}
 
 
 function dancingPartners(que){
